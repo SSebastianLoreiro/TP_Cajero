@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import exceptions.*;
 
-import model.Transaccion;
-
 public class CuentaBancaria {
     private double saldo;
     private String titular;
@@ -22,12 +20,23 @@ public class CuentaBancaria {
     public void realizarTransaccion(Transaccion t, CuentaBancaria cuentaBancaria)
             throws CuentaInactivaException, MontoInvalidoException, LimiteExtraccionExcedidoException,
             SaldoInsuficienteException, TipoDeTransaccionInvalidaException {
+
+        StringBuilder sb = new StringBuilder();
         switch (t.getTipo()) {
             case DEPÓSITO:
                 if (t.getMonto() < 0) {
                     throw new MontoInvalidoException("Monto Invalido");
                 } else {
                     this.saldo += t.getMonto();
+                    sb.append("[");
+                    sb.append(t.getFechaHora());
+                    sb.append("]");
+                    sb.append(t.getTipo());
+                    sb.append(": $");
+                    sb.append(t.getMonto());
+                    sb.append(" | Saldo: $");
+                    sb.append(this.getSaldo());
+                    this.historialTransacciones.add(sb.toString());
                 }
 
                 break;
@@ -38,6 +47,15 @@ public class CuentaBancaria {
                     throw new SaldoInsuficienteException("Saldo Insuficiente");
                 } else {
                     this.saldo -= t.getMonto();
+                    sb.append("[");
+                    sb.append(t.getFechaHora());
+                    sb.append("]");
+                    sb.append(t.getTipo());
+                    sb.append(": $");
+                    sb.append(t.getMonto());
+                    sb.append(" | Saldo: $");
+                    sb.append(this.getSaldo());
+                    this.historialTransacciones.add(sb.toString());
                 }
                 break;
             case TRANSFERENCIA:
@@ -50,7 +68,16 @@ public class CuentaBancaria {
                         throw new CuentaInactivaException("Cuenta inactiva");
                     } else {
                         this.saldo -= t.getMonto();
-                        cuentaBancaria.saldo += t.getMonto();
+                        cuentaBancaria.setSaldo(cuentaBancaria.getSaldo() + t.getMonto());
+                        sb.append("[");
+                        sb.append(t.getFechaHora());
+                        sb.append("]");
+                        sb.append(t.getTipo());
+                        sb.append(": $");
+                        sb.append(t.getMonto());
+                        sb.append(" | Saldo: $");
+                        sb.append(this.getSaldo());
+                        this.historialTransacciones.add(sb.toString());
                     }
                 }
                 break;
