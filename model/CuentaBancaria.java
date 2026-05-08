@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import exceptions.*;
+
 import model.Transaccion;
 
 public class CuentaBancaria {
@@ -17,7 +19,44 @@ public class CuentaBancaria {
         this.historialTransacciones = new ArrayList<String>();
     }
 
-    public void getHistorialTransacciones() {
+    public void realizarTransaccion(Transaccion t, CuentaBancaria cuentaBancaria)
+            throws CuentaInactivaException, MontoInvalidoException, LimiteExtraccionExcedidoException,
+            SaldoInsuficienteException, TipoDeTransaccionInvalidaException {
+        switch (t.getTipo()) {
+            case DEPÓSITO:
+                if (t.getMonto() < 0) {
+                    throw new MontoInvalidoException("Monto Invalido");
+                } else {
+                    this.saldo += t.getMonto();
+                }
+
+                break;
+            case EXTRACCIÓN:
+                if (t.getMonto() > 10000) {
+                    throw new LimiteExtraccionExcedidoException("Limite de 10000 por operacion excedido");
+                } else if (saldo < t.getMonto()) {
+                    throw new SaldoInsuficienteException("Saldo Insuficiente");
+                } else {
+                    this.saldo -= t.getMonto();
+                }
+                break;
+            case TRANSFERENCIA:
+                if (t.getMonto() < 0) {
+                    throw new MontoInvalidoException("Monto Invalido");
+                } else if (this.saldo < t.getMonto()) {
+                    throw new SaldoInsuficienteException("Saldo Insuficiente");
+                } else {
+                    if (cuentaBancaria.getActiva() == false) {
+                        throw new CuentaInactivaException("Cuenta inactiva");
+                    } else {
+                        this.saldo -= t.getMonto();
+                        cuentaBancaria.saldo += t.getMonto();
+                    }
+                }
+                break;
+            default:
+                throw new TipoDeTransaccionInvalidaException("Tipo de transaccion invalida");
+        }
 
     }
 
