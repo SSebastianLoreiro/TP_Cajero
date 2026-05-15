@@ -15,6 +15,20 @@ public class CajeroServices {
         this.cuentasBancarias = new ArrayList<>();
     }
 
+    public void agregarCuentaBancaria(CuentaBancaria cuenta) {
+        cuentasBancarias.add(cuenta);
+    }
+
+    public void mostrarCuentas() {
+        int i = 0;
+        for (CuentaBancaria cuenta : cuentasBancarias) {
+            System.out.println("Cuenta : " + (i + 1));
+            System.out.println(cuenta);
+            System.out.println("\n");
+            i++;
+        }
+    }
+
     public void depositar(double monto, String descripcion, CuentaBancaria cuentaBancaria)
             throws CuentaInactivaException, MontoInvalidoException, LimiteExtraccionExcedidoException,
             SaldoInsuficienteException, TipoDeTransaccionInvalidaException {

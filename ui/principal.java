@@ -10,6 +10,12 @@ public class principal {
         CuentaBancaria francesco = new CuentaBancaria(999999, "Francesco Stefano Pedrocca Nieto");
         CuentaBancaria antonella = new CuentaBancaria(-50, "Lola Pedrocca");
 
+        cajero.agregarCuentaBancaria(antonella);
+        cajero.agregarCuentaBancaria(sebastian);
+        cajero.agregarCuentaBancaria(francesco);
+
+        // mostrar cuentas bancarias
+        cajero.mostrarCuentas();
         // Depósitos
 
         try {

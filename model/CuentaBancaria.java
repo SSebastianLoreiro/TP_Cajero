@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import exceptions.*;
+import util.Formateador;
 
 public class CuentaBancaria {
     private double saldo;
@@ -32,8 +33,8 @@ public class CuentaBancaria {
                     sb.append(t.getFechaHora());
                     sb.append("]");
                     sb.append(t.getTipo());
-                    sb.append(": $");
-                    sb.append(t.getMonto());
+                    sb.append(": ");
+                    sb.append(Formateador.formatearMonto(t.getMonto()));
                     sb.append(" | Saldo: $");
                     sb.append(this.getSaldo());
                     this.historialTransacciones.add(sb.toString());
@@ -51,8 +52,8 @@ public class CuentaBancaria {
                     sb.append(t.getFechaHora());
                     sb.append("]");
                     sb.append(t.getTipo());
-                    sb.append(": $");
-                    sb.append(t.getMonto());
+                    sb.append(": ");
+                    sb.append(Formateador.formatearMonto(t.getMonto()));
                     sb.append(" | Saldo: $");
                     sb.append(this.getSaldo());
                     this.historialTransacciones.add(sb.toString());
@@ -73,8 +74,8 @@ public class CuentaBancaria {
                         sb.append(t.getFechaHora());
                         sb.append("]");
                         sb.append(t.getTipo());
-                        sb.append(": $");
-                        sb.append(t.getMonto());
+                        sb.append(": ");
+                        sb.append(Formateador.formatearMonto(t.getMonto()));
                         sb.append(" | Saldo: $");
                         sb.append(this.getSaldo());
                         this.historialTransacciones.add(sb.toString());
