@@ -10,10 +10,10 @@ public class CuentaBancaria {
     private boolean activa;
     private List<String> historialTransacciones;
 
-    public CuentaBancaria(double saldo, String titular, boolean activa) {
+    public CuentaBancaria(double saldo, String titular) {
         this.saldo = saldo;
         this.titular = titular;
-        this.activa = activa;
+        this.activa = true;
         this.historialTransacciones = new ArrayList<String>();
     }
 
